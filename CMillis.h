@@ -22,7 +22,7 @@ class CMillis{
    */
   CMillis(int _pausa, void (* fp)()){
     pausa = _pausa;    
-    tiempo1=millis();  
+    tiempoAnterior=millis();  
     fptr = fp;      
   }
 
