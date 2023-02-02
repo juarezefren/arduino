@@ -4,37 +4,40 @@
  * Permite ejecutar una función cada determinado tiempo
  * usando millis, es una alternativa a Ticker
  */
-class CMillis{
-  
+
+class CMillis {
   private:
-    unsigned long tiempoAnterior;
-    unsigned long pausa;   
-    void (* fptr)();
+    unsigned long interval;
+    unsigned long previousMillis;
+    bool running;
+    void (*callback)();
 
   public:
+    CMillis(unsigned long interval, void (*callback)()) {
+      this->interval = interval;
+      this->previousMillis = 0;
+      this->running = false;
+      this->callback = callback;
+    }
 
-  /**
-   * Constructor de la clase CMillis
-   * recibe como parámetro _pausa y fp()
-   * _pausa indica un tiempo en milisegundos,
-   * fp es la función que se ejecutara cada 
-   * cierto (_pausa) tiempo
-   */
-  CMillis(int _pausa, void (* fp)()){
-    pausa = _pausa;    
-    tiempoAnterior=millis();  
-    fptr = fp;      
-  }
+    void start() {
+      running = true;
+      previousMillis = millis();
+    }
 
-/**
- * Esta función ejecuta o llama a la función fptr()
- * cada cierto tiempo indicado en la variable pausa 
- */
-  void ejecutar(){     
-     if(millis() > tiempoAnterior+pausa){
-         fptr();
-         tiempoAnterior=millis();
+    void stop() {
+      running = false;
+    }
+
+    void update() {
+      if (!running) {
+        return;
       }
-  }
-  
+
+      unsigned long currentMillis = millis();
+      if (currentMillis - previousMillis >= interval) {
+        previousMillis = currentMillis;
+        callback();
+      }
+    }
 };
