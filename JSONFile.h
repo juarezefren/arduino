@@ -7,6 +7,12 @@ class JSONFile {
     SPIFFS.begin();
     this->fileName = fileName;
   }
+ 
+  bool save(const char* key, String value) {
+    char buffer[value.length() + 1];
+    value.toCharArray(buffer, value.length() + 1);
+    return save(key,buffer);
+  }
 
   bool save(const char* key, const char* value) {
     DynamicJsonDocument doc(1024);
