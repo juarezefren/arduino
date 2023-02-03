@@ -10,7 +10,7 @@ class PushButton {
      * recibe como parámetro el PIN al
      * cual se encuentra conectado el botón
      */
-    CButton(int pinButton) : _pinButton(pinButton) {
+    PushButton(int pinButton) : _pinButton(pinButton) {
       pinMode(_pinButton, INPUT_PULLUP); // Lo configura de salida
     }
 
