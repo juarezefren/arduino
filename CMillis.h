@@ -30,10 +30,8 @@ class CMillis {
     }
 
     void update() {
-      if (!running) {
-        return;
-      }
-
+      if (!running) return;
+     
       unsigned long currentMillis = millis();
       if (currentMillis - previousMillis >= interval) {
         previousMillis = currentMillis;
